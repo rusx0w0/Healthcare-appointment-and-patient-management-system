@@ -11,7 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             if (password_verify($password, $row['password'])) {
+                $_SESSION["role"] = $row['role'];
                 $_SESSION["user_id"] = $row['user_id'];
+                logAction($conn, $_SESSION['user_id'], "Logged in");
                 header("Location: dashboard.php");
                 exit();
             } else {

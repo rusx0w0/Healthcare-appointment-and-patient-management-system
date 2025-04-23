@@ -7,9 +7,14 @@ if (!isset($_SESSION["user_id"])) {
 }
 
 $user_id = $_SESSION["user_id"];
-$result = $conn->query("SELECT name FROM Users WHERE user_id = $user_id");
+$result = $conn->query("SELECT name, profile_picture FROM Users WHERE user_id = $user_id");
 $user = $result->fetch_assoc();
+echo "<img src='uploads/" . $user['profile_picture'] . "' width='100' height='100'><br>";
 ?>
+
+<?php if (isAdmin()): ?>
+    | <a href="manage_users.php">Manage Users</a>
+<?php endif; ?>
 
 <!DOCTYPE html>
 <html>
